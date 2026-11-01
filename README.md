@@ -9,8 +9,8 @@ Coordenadas: `edu.ucb.ds:shared:1.0.0-SNAPSHOT`.
 shared/src/commonMain/
 ├── kotlin/edu/ucb/ds/
 │   ├── theme/        Color.kt, Type.kt, Fonts.kt, Spacing.kt, Shape.kt, Theme.kt
-│   ├── components/   (F03) PrimaryButton, AppTextField, AppCard...
-│   └── icons/        (F03/F04)
+│   ├── components/   label, buttons, textfields, cards, surfaces, list, chips, progress, selection
+│   └── icons/        DsIcons (flechas, chevrons, check, add)
 └── composeResources/font/   Open Sans (Google Fonts, la fuente del Figma)
 ```
 
@@ -34,6 +34,29 @@ UcbEncuentraTheme.colors.scoreColor(92)   // success >= 80, warning 50-79, neutr
 ```
 
 El Figma no tiene modo oscuro: `DarkDsColors` es una propuesta.
+
+## Componentes atómicos (F03)
+
+Todos siguen el Figma y tienen `@Preview` en su archivo.
+
+| Paquete | Componentes | Dónde se ve en el Figma |
+|---|---|---|
+| `components.label` | `AppHeading`, `AppTitle`, `AppBody`, `AppLabel`, `AppOverline` | Todos los textos |
+| `components.buttons` | `PrimaryButton`, `SecondaryButton` (`AppButtonSize.Regular` 56 / `Large` 60, íconos, deshabilitado al 50 %) | "Continuar", "Siguiente", "No es lo mío" |
+| `components.textfields` | `AppTextField`, `AppTextArea`, `SelectField` (label arriba, placeholder, ícono, error) | Login, Reportar · Ubicación / Atributos |
+| `components.cards` | `AppCard` (`Elevated` blanca / `Filled` #E0E4EF) | Login, Home |
+| `components.surfaces` | `AppSurface` | Fondo de pantalla |
+| `components.list` | `AppList`, `AppListGroup`, `AppListItem` | Accesos rápidos del Home |
+| `components.chips` | `AppFilterChip`, `AppChipGroup` (FlowRow) | Mis Reportes |
+| `components.progress` | `StepProgressBar` ("Paso x de y", `onDark` para el header) | Wizard de reporte |
+| `components.selection` | `ColorSwatchPicker`, `CheckRow` | Reportar · Atributos, Confirmación de entrega |
+
+```kotlin
+PrimaryButton("Continuar", onClick = { }, trailingIcon = DsIcons.ArrowForward, modifier = Modifier.fillMaxWidth())
+AppTextField(value, onValueChange, label = "Detalle adicional", placeholder = "Ej. Aula A-203")
+AppChipGroup(listOf("Todos", "Buscando", "Verificación"), selected = filtro, onSelect = { filtro = it })
+StepProgressBar(currentStep = 1, totalSteps = 4, stepName = "Categoría", onDark = true)
+```
 
 ## Publicar en la app
 
