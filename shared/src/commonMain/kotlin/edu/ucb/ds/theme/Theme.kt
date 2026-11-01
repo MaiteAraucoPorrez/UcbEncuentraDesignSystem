@@ -55,7 +55,7 @@ object UcbEncuentraTheme {
 fun UcbEncuentraTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     colors: DsColors = dsColorsFor(darkTheme),
-    typography: DsTypography = interDsTypography(),
+    typography: DsTypography = openSansDsTypography(),
     spacing: DsSpacing = DefaultDsSpacing,
     shapes: DsShapes = DefaultDsShapes,
     content: @Composable () -> Unit
@@ -85,10 +85,19 @@ private fun DsColors.toMaterialColorScheme(darkTheme: Boolean): ColorScheme =
             onPrimary = onPrimary,
             secondary = secondary,
             onSecondary = onSecondary,
+            secondaryContainer = secondary,
+            onSecondaryContainer = onSecondary,
+            tertiary = tertiary,
+            onTertiary = onTertiary,
             background = background,
             onBackground = onBackground,
             surface = surface,
             onSurface = onSurface,
+            surfaceContainer = surfaceContainer,
+            surfaceVariant = surfaceVariant,
+            onSurfaceVariant = onSurfaceVariant,
+            outline = outline,
+            outlineVariant = outlineVariant,
             error = error,
             onError = onError
         )
@@ -98,10 +107,19 @@ private fun DsColors.toMaterialColorScheme(darkTheme: Boolean): ColorScheme =
             onPrimary = onPrimary,
             secondary = secondary,
             onSecondary = onSecondary,
+            secondaryContainer = secondary,
+            onSecondaryContainer = onSecondary,
+            tertiary = tertiary,
+            onTertiary = onTertiary,
             background = background,
             onBackground = onBackground,
             surface = surface,
             onSurface = onSurface,
+            surfaceContainer = surfaceContainer,
+            surfaceVariant = surfaceVariant,
+            onSurfaceVariant = onSurfaceVariant,
+            outline = outline,
+            outlineVariant = outlineVariant,
             error = error,
             onError = onError
         )
@@ -113,14 +131,14 @@ private fun DsTypography.toMaterialTypography(): Typography {
         headlineLarge = base.headlineLarge.merge(heading),
         headlineMedium = base.headlineMedium.merge(heading),
         headlineSmall = heading,
-        titleLarge = heading,
-        titleMedium = base.titleMedium.copy(fontFamily = body.fontFamily),
+        titleLarge = title,
+        titleMedium = bodyLarge.copy(fontWeight = label.fontWeight),
         titleSmall = label,
-        bodyLarge = base.bodyLarge.copy(fontFamily = body.fontFamily),
+        bodyLarge = bodyLarge,
         bodyMedium = body,
         bodySmall = base.bodySmall.copy(fontFamily = body.fontFamily),
         labelLarge = label,
         labelMedium = label,
-        labelSmall = base.labelSmall.copy(fontFamily = label.fontFamily)
+        labelSmall = overline
     )
 }
