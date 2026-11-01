@@ -54,3 +54,15 @@ kotlin {
 compose.resources {
     packageOfResClass = "edu.ucb.ds.resources"
 }
+
+// Se publica dentro del repo de la app (carpeta ds-repo de ProyectoPrograMovilV1, clonado al lado de este proyecto),
+// así la app compila en cualquier computadora sin ejecutar publishToMavenLocal antes.
+// Uso: ./gradlew :shared:publishAllPublicationsToAppRepoRepository
+publishing {
+    repositories {
+        maven {
+            name = "appRepo"
+            url = uri(rootProject.file("../ProyectoPrograMovilV1/ds-repo"))
+        }
+    }
+}
