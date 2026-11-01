@@ -131,14 +131,14 @@ private fun DsTypography.toMaterialTypography(): Typography {
         headlineLarge = base.headlineLarge.merge(heading),
         headlineMedium = base.headlineMedium.merge(heading),
         headlineSmall = heading,
-        titleLarge = heading,
-        titleMedium = base.titleMedium.copy(fontFamily = body.fontFamily),
+        titleLarge = title,
+        titleMedium = bodyLarge.copy(fontWeight = label.fontWeight),
         titleSmall = label,
-        bodyLarge = base.bodyLarge.copy(fontFamily = body.fontFamily),
+        bodyLarge = bodyLarge,
         bodyMedium = body,
         bodySmall = base.bodySmall.copy(fontFamily = body.fontFamily),
         labelLarge = label,
         labelMedium = label,
-        labelSmall = base.labelSmall.copy(fontFamily = label.fontFamily)
+        labelSmall = overline
     )
 }
