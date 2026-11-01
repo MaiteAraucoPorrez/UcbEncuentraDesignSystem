@@ -39,6 +39,6 @@ fun dsTypography(fontFamily: FontFamily = FontFamily.Default) = DsTypography(
 /** Sin fuentes cargadas (previews, tests). */
 val DefaultDsTypography = dsTypography()
 
-/** Tipografía con Inter, la que usa el tema por defecto. */
+/** Tipografía con Open Sans, la que usa el tema por defecto. */
 @Composable
-fun interDsTypography(): DsTypography = dsTypography(Fonts.inter())
+fun openSansDsTypography(): DsTypography = dsTypography(Fonts.openSans())

@@ -55,7 +55,7 @@ object UcbEncuentraTheme {
 fun UcbEncuentraTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     colors: DsColors = dsColorsFor(darkTheme),
-    typography: DsTypography = interDsTypography(),
+    typography: DsTypography = openSansDsTypography(),
     spacing: DsSpacing = DefaultDsSpacing,
     shapes: DsShapes = DefaultDsShapes,
     content: @Composable () -> Unit
