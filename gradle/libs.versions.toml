@@ -1,6 +1,6 @@
 # Mismas versiones que gradle/libs.versions.toml de la app (ProyectoPrograMovilV1). Si una cambia allá, cambia aquí.
 [versions]
-agp = "9.4.1"
+agp = "9.3.3"
 android-compileSdk = "37"
 android-minSdk = "24"
 composeMultiplatform = "1.12.1"
