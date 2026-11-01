@@ -32,6 +32,10 @@ kotlin {
             // Igual que la app (JVM 11)
             jvmTarget = JvmTarget.JVM_11
         }
+        // Necesario para empaquetar las fuentes (composeResources) en el .aar
+        androidResources {
+            enable = true
+        }
     }
 
     sourceSets {
@@ -41,7 +45,12 @@ kotlin {
             api(libs.compose.foundation)
             api(libs.compose.material3)
             api(libs.compose.ui)
+            implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "edu.ucb.ds.resources"
 }
