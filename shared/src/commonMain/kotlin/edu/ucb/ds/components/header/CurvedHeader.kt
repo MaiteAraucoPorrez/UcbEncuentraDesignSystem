@@ -83,11 +83,13 @@ fun CurvedHeaderContainer(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = minHeight)
             .headerWaveMask()
             .clip(shape)
             .background(UcbEncuentraTheme.colors.primary)
             .windowInsetsPadding(WindowInsets.statusBars)
+            // La altura del Figma (120 / 280) es SIN la barra de estado: se mide después de su espacio,
+            // así el contenido no cae en la zona donde la onda se desvanece.
+            .heightIn(min = minHeight)
             .padding(horizontal = UcbEncuentraTheme.spacing.screenPadding),
         content = content
     )
