@@ -9,8 +9,9 @@ Coordenadas: `edu.ucb.ds:shared:1.0.0-SNAPSHOT`.
 shared/src/commonMain/
 ├── kotlin/edu/ucb/ds/
 │   ├── theme/        Color.kt, Type.kt, Fonts.kt, Spacing.kt, Shape.kt, Theme.kt
-│   ├── components/   label, buttons, textfields, cards, surfaces, list, chips, progress, selection
-│   └── icons/        DsIcons (flechas, chevrons, check, add)
+│   ├── components/   label, buttons, textfields, cards, surfaces, list, chips, progress, selection (F03)
+│   │                 header, navigation, badges, states + cards de dominio (F04)
+│   └── icons/        DsIcons
 └── composeResources/font/   Open Sans (Google Fonts, la fuente del Figma)
 ```
 
@@ -56,6 +57,28 @@ PrimaryButton("Continuar", onClick = { }, trailingIcon = DsIcons.ArrowForward, m
 AppTextField(value, onValueChange, label = "Detalle adicional", placeholder = "Ej. Aula A-203")
 AppChipGroup(listOf("Todos", "Buscando", "Verificación"), selected = filtro, onSelect = { filtro = it })
 StepProgressBar(currentStep = 1, totalSteps = 4, stepName = "Categoría", onDark = true)
+```
+
+## Componentes de dominio (F04)
+
+Piezas propias de UCB Encuentra, armadas sobre los componentes atómicos.
+
+| Paquete | Componentes | Dónde se ve en el Figma |
+|---|---|---|
+| `components.header` | `CurvedHeader` (menú/atrás, título, subtítulo, acciones, `bottomContent`), `CurvedHeaderContainer`, `HeaderAction`, `Modifier.headerWaveMask()` | Header azul con curva de todas las pantallas, header alto del Login |
+| `components.navigation` | `BottomNavBar` + `BottomNavItem` + `BottomNavCenterAction` (FAB central opcional) | Barra inferior del Home (estudiante) y del Dashboard (staff) |
+| `components.badges` | `ScoreBadge` (verde ≥80, naranja 50–79, gris <50), `StatusChip` + `StatusTone` | Resultados de Matching, Mis Reportes |
+| `components.cards` | `CategoryTile`, `CategoryGrid` (2 col.), `StatCard`, `ItemCard` | Reportar · Categoría, Dashboard, Matching, Mis Reportes |
+| `components.states` | `EmptyState`, `ErrorState`, `LoadingState` | No están en el Figma: solo tokens y componentes del DS |
+
+`StatusTone` no conoce el dominio: la app traduce Buscando → `Neutral`, En verificación → `Warning`, Match confirmado → `Success`, Vencido → `Error`, Disponible → `Info`, Reclamado → `Primary`.
+
+```kotlin
+CurvedHeader(title = "¡Hola, Mateo!", subtitle = "Ingeniería • Sede La Paz", navigationIcon = DsIcons.Menu,
+    actions = { HeaderAction(DsIcons.DarkMode, "Modo oscuro") { toggleTheme() } })
+BottomNavBar(items, centerAction = BottomNavCenterAction(DsIcons.Add, "Reportar") { abrirWizard() })
+ItemCard(category = "Electrónicos", title = "Calculadora", date = "Encontrado: 12 Oct", score = 92,
+    image = { AsyncImage(url, null) }, variant = AppCardVariant.Filled)
 ```
 
 ## Publicar en la app
