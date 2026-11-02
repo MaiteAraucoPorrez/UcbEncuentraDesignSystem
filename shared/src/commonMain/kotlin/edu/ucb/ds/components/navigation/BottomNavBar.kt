@@ -30,7 +30,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import edu.ucb.ds.components.label.AppLabel
+import androidx.compose.material3.Text
 import edu.ucb.ds.icons.DsIcons
 import edu.ucb.ds.theme.UcbEncuentraTheme
 
@@ -75,21 +75,20 @@ fun BottomNavBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
+            // Cada pestaña mide lo que su texto: así "Inventario" entra en una línea con 5 pestañas.
             items.forEachIndexed { index, item ->
-                if (centerAction != null && index == half) {
-                    CenterButton(centerAction, Modifier.weight(1f))
-                }
-                NavItem(item, Modifier.weight(1f))
+                if (centerAction != null && index == half) CenterButton(centerAction)
+                NavItem(item)
             }
         }
     }
 }
 
 @Composable
-private fun NavItem(item: BottomNavItem, modifier: Modifier) {
+private fun NavItem(item: BottomNavItem) {
     val c = UcbEncuentraTheme.colors
     val contentColor = if (item.selected) c.onSecondary else c.onSurfaceVariant
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Box(contentAlignment = Alignment.Center) {
         Column(
             modifier = Modifier
                 .clip(UcbEncuentraTheme.shapes.pill)
@@ -104,14 +103,20 @@ private fun NavItem(item: BottomNavItem, modifier: Modifier) {
             verticalArrangement = Arrangement.spacedBy(UcbEncuentraTheme.spacing.small)
         ) {
             Icon(item.icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(20.dp))
-            AppLabel(text = item.label, color = contentColor)
+            Text(
+                text = item.label,
+                color = contentColor,
+                style = UcbEncuentraTheme.typography.label,
+                maxLines = 1,
+                softWrap = false
+            )
         }
     }
 }
 
 @Composable
-private fun CenterButton(action: BottomNavCenterAction, modifier: Modifier) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+private fun CenterButton(action: BottomNavCenterAction) {
+    Box(contentAlignment = Alignment.Center) {
         Box(
             modifier = Modifier
                 .offset(y = -FAB_RAISE)
