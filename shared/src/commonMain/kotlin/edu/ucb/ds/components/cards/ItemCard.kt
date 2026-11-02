@@ -57,44 +57,46 @@ fun ItemCard(
     val spacing = UcbEncuentraTheme.spacing
     // El badge sobresale de la esquina, por eso el Box no recorta.
     Box(modifier = modifier.fillMaxWidth()) {
-        AppCard(
-            variant = variant,
-            onClick = onClick,
-            modifier = Modifier.alpha(if (dimmed) DIMMED_ALPHA else 1f)
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(spacing.large)) {
-                if (image != null) {
-                    Box(
-                        Modifier
-                            .size(IMAGE_SIZE)
-                            .clip(UcbEncuentraTheme.shapes.medium)
-                            .background(c.surfaceVariant),
-                        contentAlignment = Alignment.Center
-                    ) { image() }
-                }
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(spacing.small)) {
-                    Row(verticalAlignment = Alignment.Top) {
-                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(spacing.small)) {
-                            AppOverline(text = category, color = categoryColor)
-                            AppTitle(text = title)
-                        }
-                        if (status != null) status()
+        // La transparencia va al contenido, no a la tarjeta: aplicada a la tarjeta deforma su sombra.
+        AppCard(variant = variant, onClick = onClick) {
+            Column(
+                modifier = Modifier.alpha(if (dimmed) DIMMED_ALPHA else 1f),
+                verticalArrangement = Arrangement.spacedBy(spacing.large)
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(spacing.large)) {
+                    if (image != null) {
+                        Box(
+                            Modifier
+                                .size(IMAGE_SIZE)
+                                .clip(UcbEncuentraTheme.shapes.medium)
+                                .background(c.surfaceVariant),
+                            contentAlignment = Alignment.Center
+                        ) { image() }
                     }
-                    MetaRow(DsIcons.Calendar, date)
-                    if (location != null) MetaRow(DsIcons.Location, location)
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+                        Row(verticalAlignment = Alignment.Top) {
+                            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+                                AppOverline(text = category, color = categoryColor)
+                                AppTitle(text = title)
+                            }
+                            if (status != null) status()
+                        }
+                        MetaRow(DsIcons.Calendar, date)
+                        if (location != null) MetaRow(DsIcons.Location, location)
+                    }
                 }
-            }
-            if (actionText != null) {
-                Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                    AppLabel(
-                        text = actionText,
-                        color = if (dimmed) c.onSurfaceVariant else c.onPrimary,
-                        modifier = Modifier
-                            .clip(UcbEncuentraTheme.shapes.pill)
-                            .background(if (dimmed) c.surfaceVariant else c.primary)
-                            .clickable(onClick = onAction)
-                            .padding(horizontal = spacing.itemGap, vertical = spacing.medium)
-                    )
+                if (actionText != null) {
+                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+                        AppLabel(
+                            text = actionText,
+                            color = if (dimmed) c.onSurfaceVariant else c.onPrimary,
+                            modifier = Modifier
+                                .clip(UcbEncuentraTheme.shapes.pill)
+                                .background(if (dimmed) c.surfaceVariant else c.primary)
+                                .clickable(onClick = onAction)
+                                .padding(horizontal = spacing.itemGap, vertical = spacing.medium)
+                        )
+                    }
                 }
             }
         }
