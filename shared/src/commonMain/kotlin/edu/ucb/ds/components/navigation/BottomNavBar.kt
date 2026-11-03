@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,7 +40,9 @@ data class BottomNavItem(
     val label: String,
     val icon: ImageVector,
     val selected: Boolean,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
+    /** Contador rojo sobre el ícono (p. ej. alertas sin leer). 0 = sin badge; más de 9 se muestra "9+". */
+    val badgeCount: Int = 0
 )
 
 /** Botón redondo central (FAB "+" para Reportar en la barra del estudiante). */
@@ -102,7 +106,23 @@ private fun NavItem(item: BottomNavItem) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(UcbEncuentraTheme.spacing.small)
         ) {
-            Icon(item.icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(20.dp))
+            if (item.badgeCount > 0) {
+                BadgedBox(
+                    badge = {
+                        Badge(
+                            containerColor = c.error,
+                            contentColor = c.onError,
+                            modifier = Modifier.semantics { contentDescription = "${item.badgeCount} sin leer" }
+                        ) {
+                            Text(if (item.badgeCount > MAX_BADGE) "$MAX_BADGE+" else item.badgeCount.toString())
+                        }
+                    }
+                ) {
+                    Icon(item.icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(20.dp))
+                }
+            } else {
+                Icon(item.icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(20.dp))
+            }
             Text(
                 text = item.label,
                 color = contentColor,
@@ -138,6 +158,7 @@ private fun CenterButton(action: BottomNavCenterAction) {
 private val BAR_HEIGHT = 84.dp
 private val FAB_SIZE = 56.dp
 private val FAB_RAISE = 24.dp
+private const val MAX_BADGE = 9
 
 @Preview
 @Composable
@@ -148,7 +169,7 @@ private fun BottomNavBarPreview() {
                 items = listOf(
                     BottomNavItem("Inicio", DsIcons.Inbox, selected = true, onClick = {}),
                     BottomNavItem("Buscar", DsIcons.Location, selected = false, onClick = {}),
-                    BottomNavItem("Alertas", DsIcons.Error, selected = false, onClick = {}),
+                    BottomNavItem("Alertas", DsIcons.Error, selected = false, onClick = {}, badgeCount = 3),
                     BottomNavItem("Perfil", DsIcons.Check, selected = false, onClick = {})
                 ),
                 centerAction = BottomNavCenterAction(DsIcons.Add, "Reportar", onClick = {})
